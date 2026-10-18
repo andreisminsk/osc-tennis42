@@ -5,6 +5,7 @@ Run:  python main.py
 from __future__ import annotations
 
 import argparse
+import os
 
 import pygame
 
@@ -20,15 +21,23 @@ def main() -> None:
     ap.add_argument('--bot-player', nargs='?', const='1', default=None,
                     choices=('1', '2'), metavar='N',
                     help='computer plays: 1 (default) = Player 1, 2 = Player 2')
+    ap.add_argument('--scale', type=float, default=None, metavar='F',
+                    help='window scale factor, e.g. 0.5 (default: auto-fit display)')
     args = ap.parse_args()
     bot_side = int(args.bot_player) - 1 if args.bot_player else None
 
+    os.environ.setdefault('SDL_VIDEO_CENTERED', '1')
     pygame.init()
     pygame.display.set_caption('OSC-TENNIS42 \u00b7 Tennis for Two (1958)')
-    window = pygame.display.set_mode((s.WINDOW_W, s.WINDOW_H))
+    desk_w, desk_h = pygame.display.get_desktop_sizes()[0]
+    auto = min(desk_w * 0.92 / s.WINDOW_W, desk_h * 0.92 / s.WINDOW_H, 1.0)
+    sc = args.scale if args.scale else auto
+    win_size = (max(320, int(s.WINDOW_W * sc)), max(240, int(s.WINDOW_H * sc)))
+    window = pygame.display.set_mode(win_size, pygame.RESIZABLE)
     clock = pygame.time.Clock()
 
     renderer = crt.CRTRenderer(window)
+    last_size = window.get_size()
     match = game.Match()
     inp = input.Input()
     bot_ai = bot.Bot(bot_side) if bot_side is not None else None
@@ -49,6 +58,13 @@ def main() -> None:
             running = False
         if edges['grat']:
             renderer.toggle_graticule()
+        if edges['full']:
+            pygame.display.toggle_fullscreen()
+
+        win_size = window.get_size()        # re-fit on resize / fullscreen toggle
+        if win_size != last_size:
+            renderer.relayout()
+            last_size = win_size
 
         # --- fixed-timestep simulation (accumulator) ----------------------------
         acc = min(acc + frame_ms, 0.25)          # clamp: avoid spiral of death

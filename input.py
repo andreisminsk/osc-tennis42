@@ -20,6 +20,7 @@ class Input:
             'p2_hit':   k[pygame.K_RSHIFT],
             'reset':    k[pygame.K_r],
             'grat':     k[pygame.K_g],
+            'full':     k[pygame.K_F11],
             'quit':     k[pygame.K_ESCAPE],
         }
         edges = {name: held[name] and not self._prev.get(name, False) for name in held}

@@ -35,15 +35,23 @@ class CRTRenderer:
         self._vig = self._build_vignette()
         self.show_graticule = True
 
-        # screen rect inside the window (4:3, centered, bezel margin)
-        m = 70
-        w = s.WINDOW_W - 2 * m
+        self._layout()
+
+    def _layout(self):
+        """Fit the CRT screen rect (4:3, bezel margin) to the current window size."""
+        ww, wh = self.win.get_size()
+        m = max(24, int(min(ww, wh) * 0.055))       # bezel margin scales with window
+        w = ww - 2 * m
         h = int(w * s.BUFFER_H / s.BUFFER_W)
-        if h > s.WINDOW_H - 2 * m:
-            h = s.WINDOW_H - 2 * m
+        if h > wh - 2 * m:
+            h = wh - 2 * m
             w = int(h * s.BUFFER_W / s.BUFFER_H)
-        self.screen_rect = pygame.Rect((s.WINDOW_W - w) // 2, (s.WINDOW_H - h) // 2, w, h)
-        self._label_font = pygame.font.SysFont('consolas', 16)
+        self.screen_rect = pygame.Rect((ww - w) // 2, (wh - h) // 2, w, h)
+        self._label_font = pygame.font.SysFont('consolas', max(11, int(16 * w / s.WINDOW_W)))
+
+    def relayout(self):
+        """Re-fit after the window was resized or toggled fullscreen."""
+        self._layout()
 
     # --- coordinate transform -------------------------------------------------
     def w2b(self, x: float, y: float) -> tuple[float, float]:

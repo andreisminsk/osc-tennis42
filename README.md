@@ -19,6 +19,10 @@ python main.py
 
 Requires Python 3.10+ and pygame (2.6+ / pygame-ce 2.5+).
 
+The window **auto-fits your display** (92% of the desktop, 4:3 aspect kept) and is
+resizable — the oscilloscope screen re-fits live. `F11` toggles fullscreen.
+Force a size with `python main.py --scale 0.5` (factor relative to 1280×960).
+
 ### Bot player
 
 Play against the computer (it aims by forward-simulating the same physics engine —
@@ -41,6 +45,7 @@ if the ball is about to die or escape reach).
 | Aim (rotate dial) | `A` / `D`       | `←` / `→`        |
 | Hit / Serve       | `Left Shift`    | `Right Shift`    |
 | Toggle graticule  | `G`             | `G`              |
+| Fullscreen        | `F11`           | `F11`            |
 | Reset match       | `R`             | `R`              |
 | Quit              | `Esc`           | `Esc`            |
 
