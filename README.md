@@ -1,3 +1,5 @@
+![screenshot](sshoot.png) 
+
 # OSC-TENNIS42
 
 A pygame recreation of **Tennis for Two** — the first interactive electronic game,
@@ -34,13 +36,13 @@ if the ball is about to die or escape reach).
 
 ## Controls
 
-| Action | Player 1 (left) | Player 2 (right) |
-|---|---|---|
-| Aim (rotate dial) | `A` / `D` | `←` / `→` |
-| Hit / Serve | `Left Shift` | `Right Shift` |
-| Toggle graticule | `G` | `G` |
-| Reset match | `R` | `R` |
-| Quit | `Esc` | `Esc` |
+| Action            | Player 1 (left) | Player 2 (right) |
+| ----------------- | --------------- | ---------------- |
+| Aim (rotate dial) | `A` / `D`       | `←` / `→`        |
+| Hit / Serve       | `Left Shift`    | `Right Shift`    |
+| Toggle graticule  | `G`             | `G`              |
+| Reset match       | `R`             | `R`              |
+| Quit              | `Esc`           | `Esc`            |
 
 **Rules:** hit the ball while it's on your side below reach height. A ball that
 settles on your side gives the opponent a point; a ball landing beyond the end
@@ -56,15 +58,16 @@ the current dial position.
 
 Measured first-bounce distances from the net (a serve from your baseline at 15 m/s):
 
-| Dial angle | Ball lands | Reading |
-|---|---|---|
-| 10–20° | net or your own side | too flat — clears the net tape only above ~15° |
-| 30° | 8.4 m in | deep, fast — hard to return |
-| **45°** | **9.8 m in** | **sweet spot — lands deep near the opponent's baseline** |
-| 60° | 6.8 m in | mid-court lob, slow and floaty (drag bends the arc) |
-| 80° | 2.5 m in | near-vertical lob — drops almost straight down past the net |
+| Dial angle | Ball lands           | Reading                                                     |
+| ---------- | -------------------- | ----------------------------------------------------------- |
+| 10–20°     | net or your own side | too flat — clears the net tape only above ~15°              |
+| 30°        | 8.4 m in             | deep, fast — hard to return                                 |
+| **45°**    | **9.8 m in**         | **sweet spot — lands deep near the opponent's baseline**    |
+| 60°        | 6.8 m in             | mid-court lob, slow and floaty (drag bends the arc)         |
+| 80°        | 2.5 m in             | near-vertical lob — drops almost straight down past the net |
 
 Notes:
+
 - The arc is **not** a textbook parabola — quadratic air drag (Donner Model 30
   emulation) pulls steep shots down early, so the maximum range sits at ~45°,
   not 45°+ as in vacuum physics.
