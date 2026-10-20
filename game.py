@@ -131,12 +131,13 @@ def draw(match: Match, crt):
     # dial indicators: faint protractor arc + bright angle tick at each baseline
     for i, sx in ((0, -1), (1, 1)):
         bx = sx * s.SERVE_X
-        pts = [crt.w2b(bx + 1.1 * math.cos(math.radians(a)), 1.1 * math.sin(math.radians(a)))
+        d = 1 if i == 0 else -1              # shot direction: both dials face the net
+        pts = [crt.w2b(bx + d * 1.1 * math.cos(math.radians(a)), 1.1 * math.sin(math.radians(a)))
                for a in range(int(s.ANGLE_MIN), int(s.ANGLE_MAX) + 1, 5)]
         crt.trace_polyline(pts, color=s.COL_GRATICULE_MAJOR, width=1)
         a = math.radians(match.angles[i])
-        p1 = crt.w2b(bx + 0.85 * math.cos(a), 0.85 * math.sin(a))
-        p2 = crt.w2b(bx + 1.35 * math.cos(a), 1.35 * math.sin(a))
+        p1 = crt.w2b(bx + d * 0.85 * math.cos(a), 0.85 * math.sin(a))
+        p2 = crt.w2b(bx + d * 1.35 * math.cos(a), 1.35 * math.sin(a))
         crt.trace_line(p1, p2, color=s.COL_TRACE, width=2)
 
     # ball (glowing dot; bloom adds the phosphor halo)
